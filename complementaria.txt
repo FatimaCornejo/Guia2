@@ -1,0 +1,117 @@
+React ejercicio 1
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <Card className="p-6 text-center w-64">
+        <CardContent>
+          <h1 className="text-2xl font-bold mb-4">Contador: {count}</h1>
+          <div className="flex justify-between gap-4">
+            <Button onClick={() => setCount(count - 1)} variant="destructive">-</Button>
+            <Button onClick={() => setCount(count + 1)} variant="default">+</Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+React ejercicio 2
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectItem } from "@/components/ui/select";
+
+export default function TemperatureConverter() {
+  const [temperature, setTemperature] = useState("");
+  const [scale, setScale] = useState("CtoF");
+  const [result, setResult] = useState(null);
+
+  const convertTemperature = () => {
+    const temp = parseFloat(temperature);
+    if (isNaN(temp)) return;
+    let converted;
+    if (scale === "CtoF") {
+      converted = (temp * 9) / 5 + 32;
+    } else {
+      converted = ((temp - 32) * 5) / 9;
+    }
+    setResult(converted.toFixed(2));
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <Card className="p-6 text-center w-80">
+        <CardContent>
+          <h1 className="text-2xl font-bold mb-4">Conversor de Temperatura</h1>
+          <Input
+            type="number"
+            placeholder="Ingrese la temperatura"
+            value={temperature}
+            onChange={(e) => setTemperature(e.target.value)}
+          />
+          <Select value={scale} onChange={(e) => setScale(e.target.value)}>
+            <SelectItem value="CtoF">Celsius a Fahrenheit</SelectItem>
+            <SelectItem value="FtoC">Fahrenheit a Celsius</SelectItem>
+          </Select>
+          <Button onClick={convertTemperature} className="mt-4">Convertir</Button>
+          {result !== null && <p className="mt-2 text-lg">Resultado: {result}°</p>}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+
+React ejercicio 3
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+export default function LoginForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleLogin = () => {
+    if (username === "admin" && password === "password") {
+      setMessage(`Bienvenido, ${username}!`);
+    } else {
+      setMessage("Credenciales incorrectas");
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <Card className="p-6 text-center w-80">
+        <CardContent>
+          <h1 className="text-2xl font-bold mb-4">Iniciar Sesión</h1>
+          <Input
+            type="text"
+            placeholder="Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleLogin} className="mt-4">Iniciar Sesión</Button>
+          {message && <p className="mt-2 text-lg">{message}</p>}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
